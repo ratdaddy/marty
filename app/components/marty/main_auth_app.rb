@@ -36,13 +36,12 @@ class Marty::MainAuthApp < Marty::AuthApp
   end
 
   def posting_menu
-    warped = Marty::Util.get_posting_time != Float::INFINITY
-    wtext  = warped ? " [#{Marty::Util.get_posting.name}" : ''
+    wtext = Marty::Util.warped? ? " #{Marty::Util.get_posting.name}" : ''
 
     {
       text:  I18n.t("postings") + wtext,
       icon:  icon_hack(:time),
-      style: (warped ? "background-color: lightGrey;" : ""),
+      style: (Marty::Util.warped? ? "background-color: lightGrey;" : ""),
       menu:  [
               :new_posting,
               :select_posting,

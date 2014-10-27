@@ -46,6 +46,9 @@ class Marty::DataImportView < Marty::CmFormPanel
     import_data, import_type =
       data["import_data"] || "", data["import_type"] || ""
 
+    return this.netzke_feedback "Can't import when time-warped" if
+      Marty::Util.warped?
+
     return this.netzke_feedback("Must provide import data.") if
       import_data.empty?
 

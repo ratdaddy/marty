@@ -207,7 +207,7 @@ class Marty::Xl
 
           a = i == 0 ? top_row : []
 
-          a = merge_row_edges(a,bottom_row) if
+          a = merge_row_edges(a, bottom_row) if
             i == (rowh - row0 - 1)
 
           a = middle_row unless
@@ -352,21 +352,19 @@ class Marty::Xl
     new_ops1, new_ops2, new_ops = [], [], []
     # precalculate the offsets of pos options embedded in another pos opt:
     ops_pos.each { |d|
-      new_ops1 += d[2].select { |inner_ops|
-        inner_ops if inner_ops[0] == "pos"
+      new_ops1 += d[2].select {|inner_ops|
+        inner_ops[0] == "pos"
       }.map { |inner|
         [inner[0], d[1].zip(inner[1]).map { |x,y| x+y }, inner[2] ]
       }
     }
     # keep the offsets of non-pos options embedded in pos opt:
     new_ops2 = ops_pos.map { |d|
-      [ d[0], d[1], d[2].select{|inner| inner if inner[0] != "pos" } ]
+      [ d[0], d[1], d[2].select{|inner| inner[0] != "pos" } ]
     }
     new_ops = new_ops1 + new_ops2
     count = new_ops.select { |d|
-      d[2].select { |inner_ops|
-        inner_ops if inner_ops[0] == "pos"
-      }.count > 0
+      d[2].select { |inner_ops| inner_ops[0] == "pos"}.count > 0
     }.count
 
     count == 0 ? new_ops.sort : recalc_offsets(new_ops)
@@ -395,9 +393,13 @@ class Marty::Xl
       case opl[0]
       when "pos"
         op, offset, data = opl
+
+        # FIXME: seems very strange that "pos" doesn't handle
+        # {"off"=>x} offsets.  Should be fixed.
         raise "bad offset #{offset}" unless
           offset.is_a?(Array) && offset.length == 2 &&
           offset.all? {|x| x.is_a? Fixnum}
+
         # column offset, row offset:
         column_offset, row_offset = offset
         r_number, last_row = row_offset, row_offset
@@ -491,8 +493,8 @@ class Marty::Xl
         ws.add_image(image_src: "#{Rails.public_path}/images/#{img}",
                      noSelect: true,
                      noMove: true) do |image|
-          image.width 	= w
-          image.height 	= h
+          image.width  = w
+          image.height = h
           image.start_at x1, y1
           image.end_at x2, y2 if x2.is_a?(Fixnum) && y2.is_a?(Fixnum)
         end
