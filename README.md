@@ -1,5 +1,7 @@
 # Marty
 
+[![Build Status](https://travis-ci.org/ratdaddy/marty.svg)](https://travis-ci.org/ratdaddy/marty)
+
 Marty is a framework for viewing and reporting on versioned data.
 Marty provides its own scripting environment.  Scripts can also be
 verioned.  RESTful APIs are provided for accessing and executing
