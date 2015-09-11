@@ -4,7 +4,7 @@ rvm:
   - 2.2.2
 
 before_script:
-  - cp config/database.yml.travis config/database.yml
+  - cp config/database.yml.travis spec/dummy/config/database.yml
 
 addons:
   postgresql: "9.3"
